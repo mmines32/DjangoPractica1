@@ -1,0 +1,57 @@
+{% extends "Milibreria/base.html" %} 
+{% load static %}
+
+{% block titulo %} Formulario {% endblock %}
+
+{% block extra_css %} 
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/loginusuario.css' %}">
+
+{% endblock %}
+
+
+{% block main %}
+
+
+<header id="navbar">
+    
+    <div>
+        <img class="imagenlogo1" src="{% static 'Milibreria/img/logo.png' %}" alt="logo">
+        </div>
+    <nav>
+        <a href="{% url 'index' %}">Inicio</a>
+        <a href="{% url 'index' %}">Colección</a>
+        <a href="{% url 'index' %}">Contacto</a>
+  </nav>
+</header>  
+
+
+<section id="formulario">
+
+   
+   <form class="col-md-12" method="POST" action="{% url 'administrador' %}">
+    {% csrf_token %}
+  
+    <div class="form-row">
+      
+  
+    {{ administrador_form }}
+  
+    <input type="submit">
+  
+  </form>
+
+
+</section>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+    
