@@ -1,4 +1,5 @@
 {% extends "Milibreria/base.html" %} 
+
 {% load static %}
 
 {% block titulo %} Formulario {% endblock %}
@@ -30,12 +31,12 @@
 
   <form class="col-md-12" method="POST" action="{% url 'loginusuario' %}">
 
-   {% csrf_token %}
+   {% csrf_token %}    <!-- si no esta no funciona el post --> 
  
    <div class="form-row">
      
  
-   {{ loginusuario_form }}
+   {{ loginusuario_form.as_p }}   <!--agregamos .as_p--> 
  
    <input type="submit">
    </div>
