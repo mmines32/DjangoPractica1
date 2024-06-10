@@ -1,37 +1,58 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
+from .models import Usuario
+
+
+class RegisterForm(forms.ModelForm):
+    confirmar_contrasena = forms.CharField(
+        label="Confirmar contraseña", widget=forms.PasswordInput
+    )
+    contrasena = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
+
+    class Meta:
+        model = Usuario
+        fields = [
+            "nombre",
+            "apellido",
+            "dni",
+            "email",
+            "direccion",
+            "telefono",
+            "contrasena",
+        ]
+
+    def clean(self):
+        cleaned_data = super().clean()
+        contrasena = cleaned_data.get("contrasena")
+        confirmar_contrasena = cleaned_data.get("confirmar_contrasena")
+
+        if contrasena and confirmar_contrasena and contrasena != confirmar_contrasena:
+            raise ValidationError("Las contraseñas no coinciden")
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["contrasena"])
+        if commit:
+            user.save()
+        return user
 
 
 class LoginUsuarioForm(forms.Form):
-    nombre = forms.CharField(label="Nombre", required=True)
-    apellido = forms.CharField(label="Apellido", required=True)
-    dni = forms.DecimalField(label="D.N.I", required=True)
-    
-    """
- def clean_nombre(self):
-    if not self.cleaned_data["nombre"].isalpha():
-        raise ValidationError("Sólo letras")
+    email = forms.EmailField(label="Email", required=True)
+    contrasena = forms.CharField(
+        label="Contraseña", widget=forms.PasswordInput, required=True
+    )
 
-    return self.cleaned_data["nombre"]
-    
-def clean_apellido(self):
-    if not self.cleaned_data["apellido"].isalpha():
-        raise ValidationError("Sólo letras")
+    def clean(self):
+        email = self.cleaned_data.get("email")
+        contrasena = self.cleaned_data.get("contrasena")
+        usuario = authenticate(username=email, password=contrasena)
 
-    return self.cleaned_data["apellido"]
- 
- 
-def clean(self):
-    cleaned_data = super().clean()
-    nombre = cleaned_data.get("nombre")
-    apellido = cleaned_data.get("apellido")
-        
-    if nombre == "Carlos" and apellido == "Lopez":
-        raise ValidationError("El usuario Carlos Lopez ya existe")
-        
-    if self.cleaned_data["dni"] < 1000000:
-        raise ValidationError("El dni debe tener 8 digitos")
+        if usuario is None:
+            raise forms.ValidationError("Correo electrónico o contraseña incorrectos")
 
-    return self.cleaned_data
-
-"""
+        self.cleaned_data["usuario"] = usuario
+        return self.cleaned_data

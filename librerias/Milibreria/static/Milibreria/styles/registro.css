@@ -1,0 +1,17 @@
+body {
+  background-color: #D2649A;
+}
+
+.form-row {
+  display: block;
+  background-position: center center;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  padding: 16%;
+  text-align: center;
+  line-height: 1.5;
+  background-color: #D2649A;
+}
