@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block titulo %} Formulario {% endblock %}
+{% block titulo %} Iniciar Sesión {% endblock %}
 
 {% block extra_css %} 
 
@@ -22,7 +22,6 @@
         <a href="{% url 'index' %}">Inicio</a>
         <a href="{% url 'index' %}">Colección</a>
         <a href="{% url 'index' %}">Contacto</a>
-        <a href="{% url 'administrador' %}">Administrador</a>
   </nav>
 </header>  
 
@@ -36,9 +35,9 @@
    <div class="form-row">
      
  
-   {{ loginusuario_form.as_p }}   <!--agregamos .as_p--> 
+   {{ form.as_p }}   <!--agregamos .as_p--> 
  
-   <input type="submit">
+   <input type="submit" value="Iniciar Sesión">
    </div>
  </form>
 </section>

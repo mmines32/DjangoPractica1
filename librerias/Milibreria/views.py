@@ -1,43 +1,29 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.shortcuts import redirect
-from django.contrib import messages
-
-from .forms import *
-
-import datetime
+from django.shortcuts import render, redirect
+from .forms import RegisterForm, LoginUsuarioForm
+from django.contrib.auth import login
 
 def index(request):
     return render(request,'Milibreria/index.html')
 
-def loginusuario(request):
-    contexto = {}
-    if request.method == "GET":
-        contexto['loginusuario_form'] = LoginUsuarioForm()
-        
-    else:
-        form = LoginUsuarioForm(request.POST)  #asumo que es un post#
-        contexto['loginusuario'] = form  #genero el login con los datos enviados por usuario#
-        
-        #validaciones
+
+def registrar_usuario(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            print(request.POST)   # es para ver lo que envia el post #
-    
-            return redirect('index')   # me redirige al index #
-    
-    
-    return render(request,'Milibreria/loginusuario.html', contexto)
+            form.save()
+            return redirect("loginusuario")
+    else:
+        form = RegisterForm()
+    return render(request, "Milibreria/registro.html", {"form": form})
 
 
-   
-def administrador(request):
-    
-    contexto = {
-        'administrador_form' : AdministradorForm()
-    }
-    return render(request,'Milibreria/administrador.html', contexto)
-
-
-
-# Create your views here.
-
+def login_usuario(request):
+    if request.method == "POST":
+        form = LoginUsuarioForm(request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get("usuario")
+            login(request, usuario)
+            return redirect("index")
+    else:
+        form = LoginUsuarioForm()
+    return render(request, "Milibreria/login.html", {"form": form})
