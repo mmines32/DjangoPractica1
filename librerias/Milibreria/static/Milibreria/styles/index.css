@@ -1,5 +1,5 @@
-#inicio{
-    background-color: #D2649A;
+#indice{
+    background-color:#FFE9D0;
 }
 .container .slide {
     display:flex;
@@ -18,7 +18,7 @@
 }
 
 #inicio h1{
-        color:white;
+        color:black;
          font-weight: bold;
          font-size: 3vw;
          text-align: center;
@@ -26,7 +26,7 @@
         }
 
 .btn{
-    background-color:#D2649A;
+    background-color:#FFE9D0;
     }
      
 #descripcion {
@@ -41,7 +41,7 @@
     background-size:cover; 
     background-position: center center;
     margin: none;
-    background-color: #D2649A;
+    background-color:#FFE9D0;
    
 }
 
@@ -62,7 +62,7 @@
 }
 
 #coleccion{
-    background-color: #D2649A;
+    background-color:#FFE9D0;
 }
 
 #coleccion .card{
@@ -99,7 +99,7 @@
     background-repeat:no-repeat;
     background-size:cover; 
     background-position: center center;
-    background-color:#D2649A;
+    background-color:#FFE9D0;
     }
 
  #descripcion-libro .container{

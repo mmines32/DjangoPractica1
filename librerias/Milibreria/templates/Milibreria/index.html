@@ -15,32 +15,13 @@
 
 {% block main %}
 
-
-<header id="navbar">
-    
-      <div>
-      <img class="imagenlogo1" src="{% static 'Milibreria/img/logo.png' %}" alt="logo">
-      </div>
-      <nav>
-        <ul>
-          <a href="{% url 'index' %}">Inicio</a>
-            <a href="#descripcion">Quienes somos</a>
-            <a href="#descripcion-libro">Colección</a>
-            <a href="#contacto">Contacto</a>
-          <a href="{% url 'loginusuario' %}">Login</a>
-          </ul>
-      </nav>
-   
-</header>  
-
-
 <section id="inicio">
       
   <div class="container">
   <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active" data-bs-interval="5000">
-        <img src="{% static 'Milibreria/img/portada.jpg' %}" alt="portada" class="d-block w-100">
+        <img src="{% static 'Milibreria/img/portada1.jpeg' %}" alt="portada" class="d-block w-100">
       </div>
       <div class="carousel-caption d-none d-md-block">
         <h1>Libreria Django</h1>
@@ -118,7 +99,7 @@
 
   <div class="col ml-5">
     <div class="card" style="width: 18rem;">
-      <img src="{% static 'Milibreria/img/latinoamerica.jpeg' %}" alt="libro3" class="card-img-top">
+      <img src="{% static 'Milibreria/img/latinoamericana.jpeg' %}" alt="libro3" class="card-img-top">
       <div class="card-body">
         <h5 class="card-title">Literatura latinoamericana</h5>
         <p class="card-text">Encuentra las novelas y autores mas importantes.</p>
