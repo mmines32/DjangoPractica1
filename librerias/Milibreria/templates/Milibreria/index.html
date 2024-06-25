@@ -15,26 +15,6 @@
 
 {% block main %}
 
-
-<header id="navbar">
-
-  <div>
-    <img class="imagenlogo1" src="{% static 'Milibreria/img/logo.png' %}" alt="logo">
-  </div>
-  <nav>
-    <ul>
-      <a href="{% url 'index' %}">Inicio</a>
-      <a href="#descripcion">Quienes somos</a>
-      <a href="#descripcion-libro">Colección</a>
-      <a href="#contacto">Contacto</a>
-      <a href="{% url 'loginusuario' %}">Login</a>
-      <a href="{% url 'registro' %}">Registrarse</a>
-    </ul>
-  </nav>
-
-</header>
-
-
 <section id="inicio">
 
   <div class="container">
@@ -67,7 +47,6 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
   </div>
 </section>
 
@@ -107,7 +86,7 @@
         <div class="card-body">
           <h5 class="card-title">Literatura infantil</h5>
           <p class="card-text">Nuevos mundos imaginarios para niños.</p>
-          <a href="{%  url 'loginusuario' %}" class="btn btn-primary">Comprar</a>
+          <a href="{%  url 'loginusuario' %}" class="button">Comprar</a>
         </div>
       </div>
     </div>
@@ -118,7 +97,7 @@
         <div class="card-body">
           <h5 class="card-title">Literatura Universal</h5>
           <p class="card-text">Explora las obras literarias famosas.</p>
-          <a href="{%  url 'loginusuario' %}" class="btn btn-primary">Comprar</a>
+          <a href="{%  url 'loginusuario' %}" class="button">Comprar</a>
         </div>
       </div>
     </div>
@@ -129,7 +108,7 @@
         <div class="card-body">
           <h5 class="card-title">Literatura latinoamericana</h5>
           <p class="card-text">Encuentra las novelas y autores mas importantes.</p>
-          <a href="{%  url 'loginusuario' %}" class="btn btn-primary">Comprar</a>
+          <a href="{%  url 'loginusuario' %}" class="button">Comprar</a>
         </div>
       </div>
     </div>

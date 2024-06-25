@@ -13,18 +13,6 @@
 
 {% block main %}
 
-<header id="navbar">
-
-  <div>
-    <img class="imagenlogo1" src="{% static 'Milibreria/img/logo.png' %}" alt="logo">
-  </div>
-  <nav>
-    <a href="{% url 'index' %}">Inicio</a>
-    <a href="{% url 'index' %}">Colección</a>
-    <a href="{% url 'index' %}">Contacto</a>
-  </nav>
-</header>
-
 <section id="formulario">
 
   <form class="col-md-12" method="POST" action="{% url 'registro' %}">
@@ -33,9 +21,9 @@
 
     <div class="form-row">
 
-      {{ form.as_p }} <!--agregamos .as_p-->
+      {{ form.as_div }} <!--agregamos .as_p-->
 
-      <input type="submit" value="Registrarse">
+      <input class="button" type="submit" value="Registrarse">
     </div>
   </form>
 </section>
