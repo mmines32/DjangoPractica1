@@ -64,3 +64,14 @@ class Usuario(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+class Libro(models.Model):
+    titulo = models.CharField(max_length=100, verbose_name="Título")
+    autor = models.CharField(max_length=100, verbose_name="Autor")
+    descripcion = models.TextField(verbose_name="Descripción")
+    precio = models.DecimalField(max_digits=6, decimal_places=2, null=True, verbose_name="Precio")
+    imagen = models.CharField(max_length=100, null=True, verbose_name="Imagen")
+    
+    def __str__(self):
+        return self.titulo
+    

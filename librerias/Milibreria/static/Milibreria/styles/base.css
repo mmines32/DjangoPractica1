@@ -37,7 +37,7 @@ body {
     position: sticky;
     width: 100%;
     margin: auto;
-    padding: 10px;
+    padding: 20px;
     top: 0;
     display: flex;
     flex-direction: row;
@@ -53,13 +53,21 @@ body {
 header {
     display: flex;
     flex-direction: row;
-
     align-items: center;
     justify-content: space-between;
     height: 85px;
 }
 
-header a {
+header ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+header a, header button {
     padding: 5px 12px;
     font-weight: bold;
     text-decoration: none;

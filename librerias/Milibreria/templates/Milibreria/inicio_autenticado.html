@@ -1,0 +1,35 @@
+{% extends "Milibreria/base.html" %}
+
+{% load static %}
+
+{% block titulo %} Bienvenido {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Milibreria/styles/inicio_autenticado.css' %}">
+{% endblock %}
+
+{% block main %}
+<section id="inicio">
+  <div class="container-saludo">
+    <h1>Bienvenido de nuevo, {{ user.nombre }}!</h1>
+    <p>¡Estamos encantados de verte de nuevo en Librería Django!</p>
+    <p>Aquí encontrarás las últimas novedades y recomendaciones solo para ti.</p>
+  </div>
+</section>
+<section>
+  {% for libro in libros %}
+  <div class="container-libros">
+    <div class="card-libro">
+      <img src="{{libro.imagen.url}}" alt="{{libro.titulo}}" class="card-img-top">
+      <div class="card-descripcion-libro">
+        <h5 class="card-title">{{libro.titulo}}</h5>
+        <h6 class="card-text">{{libro.autor}}</h6>
+        <p class="card-text">{{libro.descripcion}}</p>
+        <p class="card-text">{{libro.precio}}</p>
+        <a href="" class="button">Comprar</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -8,6 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block titulo %}Librería Django {% endblock %}</title>
+  <link rel="shortcut icon" href="{% static 'Milibreria/img/logo.png' %}" type="image/x-icon">
 
   <link rel="stylesheet" href="{% static 'Milibreria/styles/base.css' %}">
 
@@ -33,12 +34,22 @@
     </div>
     <nav>
       <ul>
-        <a href="{% url 'index' %}">Inicio</a>
-        <a href="#descripcion">Quienes somos</a>
-        <a href="#descripcion-libro">Colección</a>
-        <a href="#contacto">Contacto</a>
-        <a href="{% url 'loginusuario' %}">Login</a>
-        <a href="{% url 'registro' %}">Registrarse</a>
+        {% if user.is_authenticated %}
+        <li>
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Salir</button>
+          </form>
+        </li>
+        <li><a href="">Carrito</a></li>
+        {% else %}
+        <li><a href="{% url 'index' %}">Inicio</a></li>
+        <li><a href="#descripcion">Quienes somos</a></li>
+        <li><a href="#descripcion-libro">Colección</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="{% url 'loginusuario' %}">Login</a></li>
+        <li><a href="{% url 'registro' %}">Registrarse</a></li>
+        {% endif %}
       </ul>
     </nav>
 
