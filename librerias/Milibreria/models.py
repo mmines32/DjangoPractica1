@@ -46,6 +46,7 @@ class Usuario(AbstractBaseUser):
     direccion = models.CharField(max_length=100, verbose_name="Dirección")
     telefono = models.CharField(max_length=20, verbose_name="Teléfono", unique=True)
     password = models.CharField(max_length=100, verbose_name="Contraseña", default="")
+    is_admin = models.BooleanField(default=False)
 
     objects = UsuarioManager()
 
