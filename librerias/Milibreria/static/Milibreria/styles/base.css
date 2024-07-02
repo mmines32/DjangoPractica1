@@ -83,6 +83,10 @@ header a:hover {
     color: rgb(111, 106, 106);
 }
 
+header button:hover {
+    color: rgb(111, 106, 106);
+}
+
 .imagenlogo1 {
     height: 13vh;
     width: 13vw;
@@ -99,13 +103,17 @@ footer {
 
 }
 
-.imagen-footer {
+.imagen-instagram, .imagen-facebook, .imagen-youtube {
     height: 2.1vw;
     width: 2.1vw;
     margin: 0;
     padding-top: 3px;
     margin: 10px;
 
+}
+
+.imagen-instagram {
+    fill: rgb(255, 0, 0);
 }
 
 footer p {

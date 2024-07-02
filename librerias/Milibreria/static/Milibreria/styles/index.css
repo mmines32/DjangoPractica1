@@ -74,7 +74,6 @@
 #coleccion .container {
     display: flex;
     justify-content: row;
-
     width: 100%;
     align-items: center;
     background-position: center center;
@@ -133,4 +132,5 @@
 .button:hover {
     background-color: rgb(239, 230, 230);
     color: #D2649A;
+    border: 2px solid #D2649A;
 }

@@ -5,10 +5,13 @@
     "contrasenia",
     "descripcion",
     "direccion",
+    "facebook",
+    "instagram",
     "librerias",
     "loginusuario",
     "milibreria",
     "Milibreria",
-    "telefono"
+    "telefono",
+    "youtube"
   ]
 }
