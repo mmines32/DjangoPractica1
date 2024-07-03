@@ -72,7 +72,51 @@ class Libro(models.Model):
     descripcion = models.TextField(verbose_name="Descripción")
     precio = models.DecimalField(max_digits=6, decimal_places=2, null=True, verbose_name="Precio")
     imagen = models.URLField(max_length=100, null=True, verbose_name="Imagen")
-    
+
     def __str__(self):
         return self.titulo
-    
+
+
+class LibroStock(models.Model):
+    titulo = models.CharField(max_length=100, verbose_name="Título")
+    autor = models.CharField(max_length=100, verbose_name="Autor")
+    descripcion = models.TextField(verbose_name="Descripción")
+    precio = models.DecimalField(
+        max_digits=6, decimal_places=2, null=True, verbose_name="Precio"
+    )
+    cantidad = models.PositiveIntegerField(verbose_name="Cantidad en stock")
+    fecha_carga = models.DateField(auto_now_add=True, verbose_name="Fecha de carga")
+
+    def __str__(self):
+        return f"{self.titulo} - {self.cantidad} en stock"
+
+
+class Orden(models.Model):
+    cliente = models.ForeignKey(
+        Usuario, on_delete=models.CASCADE, related_name="ordenes"
+    )
+    fecha_orden = models.DateTimeField(
+        auto_now_add=True, verbose_name="Fecha de la orden"
+    )
+    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Total")
+
+    def __str__(self):
+        return f"Orden {self.id} - {self.cliente.email}"
+
+
+class DetalleOrden(models.Model):
+    orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name="detalles")
+    libro = models.ForeignKey(
+        LibroStock, on_delete=models.CASCADE, verbose_name="Libro"
+    )
+    cantidad = models.PositiveIntegerField(verbose_name="Cantidad")
+    precio = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
+
+    def __str__(self):
+        return f"Orden {self.orden.id} - {self.libro.titulo}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Si es una nueva instancia
+            self.libro.cantidad -= self.cantidad
+            self.libro.save()
+        super().save(*args, **kwargs)

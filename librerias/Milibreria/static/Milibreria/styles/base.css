@@ -67,7 +67,8 @@ header ul {
     gap: 15px;
 }
 
-header a, header button {
+header a,
+header button {
     padding: 5px 12px;
     font-weight: bold;
     text-decoration: none;
@@ -80,11 +81,11 @@ header a, header button {
 }
 
 header a:hover {
-    color: rgb(111, 106, 106);
+    color: rgb(239, 230, 230);
 }
 
 header button:hover {
-    color: rgb(111, 106, 106);
+    color: rgb(239, 230, 230);
 }
 
 .imagenlogo1 {
@@ -103,17 +104,36 @@ footer {
 
 }
 
-.imagen-instagram, .imagen-facebook, .imagen-youtube {
-    height: 2.1vw;
-    width: 2.1vw;
+.imagen-instagram,
+.imagen-facebook,
+.imagen-youtube {
     margin: 0;
     padding-top: 3px;
     margin: 10px;
+}
 
+.imagen-instagram:hover,
+.imagen-facebook:hover,
+.imagen-youtube:hover {
+    cursor: pointer;
 }
 
 .imagen-instagram {
-    fill: rgb(255, 0, 0);
+    fill: #e33f1e;
+    height: 2.2vw;
+    width: 2.2vw;
+}
+
+.imagen-facebook {
+    fill: #3917e3;
+    height: 2vw;
+    width: 2vw;
+}
+
+.imagen-youtube {
+    fill: #d91212;
+    height: 2.7vw;
+    width: 2.3vw;
 }
 
 footer p {

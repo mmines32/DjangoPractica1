@@ -1,6 +1,5 @@
 main {
   background-color: #D2649A;
-  height: 100vh;
 }
 
 .container-saludo {
@@ -9,6 +8,7 @@ main {
 
 .container-cards {
   display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
