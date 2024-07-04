@@ -42,10 +42,10 @@ class UsuarioManager(BaseUserManager):
 class Usuario(AbstractBaseUser):
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
     apellido = models.CharField(max_length=50, verbose_name="Apellido")
-    dni = models.CharField(max_length=8, verbose_name="DNI", unique=True)
+    dni = models.PositiveIntegerField(verbose_name="DNI", unique=True)
     email = models.EmailField(max_length=50, verbose_name="Email", unique=True)
     direccion = models.CharField(max_length=100, verbose_name="Dirección")
-    telefono = models.CharField(max_length=20, verbose_name="Teléfono", unique=True)
+    telefono = models.PositiveIntegerField(verbose_name="Teléfono", unique=True)
     password = models.CharField(max_length=100, verbose_name="Contraseña", default="")
     is_admin = models.BooleanField(default=False)
 
