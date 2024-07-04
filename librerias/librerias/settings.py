@@ -86,7 +86,7 @@ DATABASES = {
     
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "libreria",
+        "NAME": "libreria_django",
         "USER": "postgres",
         "PASSWORD": "Jaimillo81.",
         "HOST": "127.0.0.1",

@@ -1,0 +1,58 @@
+main {
+  background-color: #D2649A;
+}
+
+.container-saludo {
+  padding: 20px;
+}
+
+.container-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.container-libros {
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: rgb(239, 230, 230);
+  width: 300px;
+  height: 600px;
+  border-radius: 10px;
+  box-shadow: rgb(239, 230, 230) 0px 0px 5px;
+}
+
+.card-libro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-img {
+  height: 300px;
+}
+
+.card-text {
+  font-size: medium;
+}
+
+.button {
+  background-color: #D2649A;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: rgb(239, 230, 230);
+  color: #D2649A;
+  border: 2px solid #D2649A;
+}

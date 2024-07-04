@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -46,6 +47,7 @@ class Usuario(AbstractBaseUser):
     direccion = models.CharField(max_length=100, verbose_name="Dirección")
     telefono = models.CharField(max_length=20, verbose_name="Teléfono", unique=True)
     password = models.CharField(max_length=100, verbose_name="Contraseña", default="")
+    is_admin = models.BooleanField(default=False)
 
     objects = UsuarioManager()
 
@@ -64,3 +66,52 @@ class Usuario(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+class Libro(models.Model):
+    titulo = models.CharField(max_length=100, verbose_name="Título")
+    autor = models.CharField(max_length=100, verbose_name="Autor")
+    descripcion = models.TextField(verbose_name="Descripción")
+    precio = models.DecimalField(max_digits=6, decimal_places=2, null=True, verbose_name="Precio")
+    imagen = models.URLField(max_length=100, null=True, verbose_name="Imagen")
+
+    def __str__(self):
+        return self.titulo
+
+
+class LibroStock(models.Model):
+    titulo = models.CharField(max_length=100, verbose_name="Título")
+    autor = models.CharField(max_length=100, verbose_name="Autor")
+    descripcion = models.TextField(verbose_name="Descripción")
+    precio = models.DecimalField(
+        max_digits=6, decimal_places=2, null=True, verbose_name="Precio"
+    )
+    cantidad = models.PositiveIntegerField(verbose_name="Cantidad en stock")
+    fecha_carga = models.DateField(auto_now_add=True, verbose_name="Fecha de carga")
+
+    def __str__(self):
+        return f"{self.titulo} - {self.cantidad} en stock"
+
+
+class Orden(models.Model):
+    usuario = models.ForeignKey(
+        Usuario, on_delete=models.CASCADE, related_name="ordenes"
+    )
+    fecha_orden = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Orden {self.id} de {self.usuario.nombre}"
+
+
+class DetalleOrden(models.Model):
+    orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name="detalles")
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    precio = models.DecimalField(max_digits=6, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.total = self.cantidad * self.precio
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Detalle de Orden {self.orden.id} - {self.libro.titulo}"

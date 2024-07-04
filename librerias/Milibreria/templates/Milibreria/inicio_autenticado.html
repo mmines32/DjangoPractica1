@@ -1,0 +1,81 @@
+{% extends "Milibreria/base.html" %}
+
+{% load static %}
+
+{% block titulo %} Bienvenido {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Milibreria/styles/inicio_autenticado.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="carritoModalLabel">Tu Carrito de Compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí se mostrarán los detalles de las compras -->
+        <ul id="carritoItems">
+          {% for detalle in detalles_orden %}
+          <li>{{ detalle.libro.titulo }} - Cantidad: {{ detalle.cantidad }} - Precio: ${{ detalle.precio }} - Total: ${{
+            detalle.total }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Proceder al Pago</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="inicio">
+  <div class="container-saludo">
+    <h1>Bienvenido, {{ user.nombre }}!</h1>
+    <p>¡Estamos encantados de verte de nuevo en Librería Django!</p>
+    <p>Aquí encontrarás las últimas novedades y recomendaciones solo para ti.</p>
+  </div>
+</section>
+
+<section class="container-cards">
+  {% for libro in libros %}
+  <div class="container-libros">
+    <div class="card-libro">
+      <img src="{{libro.imagen}}" alt="{{libro.titulo}}" class="card-img">
+      <div class="card-descripcion-libro">
+        <h5 class="card-title">{{libro.titulo}}</h5>
+        <h6 class="card-text">{{libro.autor}}</h6>
+        <p class="card-text">{{libro.descripcion}}</p>
+        <p class="card-text" style="font-weight: bold;">Precio: $ {{libro.precio}}</p>
+        <a href="#" class="button">Comprar</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carritoItems = document.getElementById('carritoItems');
+    const botonesComprar = document.querySelectorAll('.button');
+
+    botonesComprar.forEach(boton => {
+      boton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const libroId = this.dataset.id;
+        const libroTitulo = this.dataset.titulo;
+        const libroPrecio = this.dataset.precio;
+
+        const listItem = document.createElement('li');
+        listItem.textContent = `${libroTitulo} - Cantidad: 1 - Precio: $${libroPrecio} - Total: $${libroPrecio}`;
+
+        carritoItems.appendChild(listItem);
+      });
+    });
+  });
+</script>
+{% endblock %}
