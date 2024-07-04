@@ -8,6 +8,7 @@ urlpatterns = [
     path('loginusuario', views.login_usuario, name='loginusuario'),
     path('inicio_autenticado', views.inicio_autenticado, name='inicio_autenticado'),
     path('logout', LogoutView.as_view(next_page='index'), name='logout'),
+    path('confirmar_compra', views.confirmar_compra, name='confirmar_compra'),
 ]
 
 

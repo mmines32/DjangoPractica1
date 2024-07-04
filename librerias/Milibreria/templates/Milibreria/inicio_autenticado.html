@@ -24,15 +24,23 @@
             detalle.total }}</li>
           {% endfor %}
         </ul>
+        <p id="totalGeneral">Total: $0.00</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Proceder al Pago</button>
+        <form method="post" action="{% url 'confirmar_compra' %}">
+          {% csrf_token %}
+          <input type="hidden" name="carrito" id="carritoInput">
+          <button type="button" class="btn" id="borrarCarrito">Borrar</button>
+          <button type="button" class="btn">Confirmar</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
-
+<div id="mensajeNotificacion" class="alert alert-success" role="alert"
+  style="display:none; position: fixed; bottom: 20px; right: 20px; color: #D2649A; background-color: rgb(239, 230, 230);">
+  Libro agregado al carrito
+</div>
 <section id="inicio">
   <div class="container-saludo">
     <h1>Bienvenido, {{ user.nombre }}!</h1>
@@ -51,7 +59,7 @@
         <h6 class="card-text">{{libro.autor}}</h6>
         <p class="card-text">{{libro.descripcion}}</p>
         <p class="card-text" style="font-weight: bold;">Precio: $ {{libro.precio}}</p>
-        <a href="#" class="button">Comprar</a>
+        <a href="#" class="button" data-id="{{libro.id}}" data-titulo="{{libro.titulo}}" data-precio="{{libro.precio}}">Comprar</a>
       </div>
     </div>
   </div>
@@ -61,6 +69,20 @@
   document.addEventListener('DOMContentLoaded', function () {
     const carritoItems = document.getElementById('carritoItems');
     const botonesComprar = document.querySelectorAll('.button');
+    const totalGeneralElement = document.getElementById('totalGeneral');
+    const botonBorrar = document.getElementById('borrarCarrito');
+    const mensajeNotificacion = document.getElementById('mensajeNotificacion');
+    const carritoInput = document.getElementById('carritoInput');
+    let totalGeneral = 0;
+    let carrito = [];
+
+    function mostrarMensaje(mensaje) {
+      mensajeNotificacion.textContent = mensaje;
+      mensajeNotificacion.style.display = 'block';
+      setTimeout(() => {
+        mensajeNotificacion.style.display = 'none';
+      }, 3000);
+    }
 
     botonesComprar.forEach(boton => {
       boton.addEventListener('click', function (event) {
@@ -68,13 +90,34 @@
 
         const libroId = this.dataset.id;
         const libroTitulo = this.dataset.titulo;
-        const libroPrecio = this.dataset.precio;
+        const libroPrecio = parseFloat(this.dataset.precio);
+
+        if (!libroTitulo || isNaN(libroPrecio)) {
+          console.log('Error al obtener los datos del libro', libroTitulo, libroPrecio);
+          return;
+        }
 
         const listItem = document.createElement('li');
-        listItem.textContent = `${libroTitulo} - Cantidad: 1 - Precio: $${libroPrecio} - Total: $${libroPrecio}`;
+        listItem.textContent = `${libroTitulo} - Precio: $${libroPrecio}`;
 
         carritoItems.appendChild(listItem);
+
+        totalGeneral += libroPrecio;
+        totalGeneralElement.textContent = `Total: $${totalGeneral.toFixed(2)}`;
+
+        carrito.push({ titulo: libroTitulo, cantidad: 1,  precio: libroPrecio });
+        carritoInput.value = JSON.stringify(carrito);
+
+        mostrarMensaje('Libro agregado al carrito');
       });
+    });
+
+    botonBorrar.addEventListener('click', function () {
+      carritoItems.innerHTML = '';
+      totalGeneral = 0;
+      totalGeneralElement.textContent = `Total: $${totalGeneral.toFixed(2)}`;
+      carrito = [];
+      carritoInput.value = '';
     });
   });
 </script>
