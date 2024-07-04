@@ -41,7 +41,7 @@
             <button type="submit">Salir</button>
           </form>
         </li>
-        <li><a href="">Carrito</a></li>
+        <li><a href="" data-bs-toggle="modal" data-bs-target="#carritoModal">Carrito</a></li>
         {% if user.is_admin %}
         <li><a href="/admin/" target="_blank">Administrador</a></li>
         {% endif %}

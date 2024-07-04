@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -92,31 +93,25 @@ class LibroStock(models.Model):
 
 
 class Orden(models.Model):
-    cliente = models.ForeignKey(
+    usuario = models.ForeignKey(
         Usuario, on_delete=models.CASCADE, related_name="ordenes"
     )
-    fecha_orden = models.DateTimeField(
-        auto_now_add=True, verbose_name="Fecha de la orden"
-    )
-    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Total")
+    fecha_orden = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"Orden {self.id} - {self.cliente.email}"
+        return f"Orden {self.id} de {self.usuario.nombre}"
 
 
 class DetalleOrden(models.Model):
     orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name="detalles")
-    libro = models.ForeignKey(
-        LibroStock, on_delete=models.CASCADE, verbose_name="Libro"
-    )
-    cantidad = models.PositiveIntegerField(verbose_name="Cantidad")
-    precio = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
-
-    def __str__(self):
-        return f"Orden {self.orden.id} - {self.libro.titulo}"
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    precio = models.DecimalField(max_digits=6, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
 
     def save(self, *args, **kwargs):
-        if not self.pk:  # Si es una nueva instancia
-            self.libro.cantidad -= self.cantidad
-            self.libro.save()
+        self.total = self.cantidad * self.precio
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Detalle de Orden {self.orden.id} - {self.libro.titulo}"

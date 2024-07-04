@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .models import Libro
+from .models import Libro, DetalleOrden
 from .forms import RegisterForm, LoginUsuarioForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -36,4 +36,9 @@ def login_usuario(request):
 @login_required
 def inicio_autenticado(request):
     libros = Libro.objects.all()
-    return render(request, "Milibreria/inicio_autenticado.html", {"libros": libros})
+    detalles_orden = DetalleOrden.objects.filter(orden__usuario=request.user)
+    context = {
+        "libros": libros,
+        "detalles_orden": detalles_orden
+    }
+    return render(request, "Milibreria/inicio_autenticado.html", context)
