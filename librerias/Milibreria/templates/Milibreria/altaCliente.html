@@ -1,0 +1,65 @@
+{% extends "Milibreria/base.html" %} 
+
+{% load static %}
+
+{% block titulo %} Formulario {% endblock %}
+
+{% block extra_css %} 
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/altaProducto.css' %}">
+
+{% endblock %}
+
+
+{% block main %}
+
+<header id="navbar">
+    
+  <div>
+  <img class="imagenlogo1" src="{% static 'Milibreria/img/logo.png' %}" alt="logo">
+  </div>
+  <nav>
+  <ul>
+    <a href="{% url 'index' %}">Inicio</a>
+      
+    <a href="{% url 'listaCliente' %}">Lista de clientes</a>
+    <a href="{% url 'altaCompra' %}">Compra</a>
+    </ul>
+</nav>
+
+
+</header> 
+
+
+
+<section id="formulario">
+  <div class="titulo"> <h2>Alta Cliente</h2></div>
+
+  <form class="col-md-12" method="POST" action="{% url 'altaCliente' %}">
+
+   {% csrf_token %}    <!-- si no esta no funciona el post --> 
+ 
+   <div class="form-row">
+     
+ 
+   {{ formulario.as_p}}   <!--agregamos .as_p--> 
+ 
+   <input type="submit" class="btn">
+   <a href="{%  url 'altaCompra' %}" class="btn btn-warding">Comprar</a>
+                                        
+   </div>
+ </form>
+</section>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+    

@@ -1,0 +1,44 @@
+{% extends "Milibreria/base.html" %} 
+
+{% load static %}
+
+{% block titulo %}Registro producto {% endblock %}
+
+{% block extra_css %} 
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/altaProducto.css' %}">
+
+{% endblock %}
+
+
+{% block main %}
+
+
+
+<section id="formulario">
+  {% if messages %}
+  {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+  {% endfor %}
+{% endif %}
+
+ <div class="titulo"> <h2>Alta de libros</h2></div>
+
+
+
+  <form method="POST" action="{% url 'altaProducto' %}">
+    {% csrf_token %} 
+    <!-- si no esta no funciona el post --> 
+    {{ formulario.as_p }}   <!--agregamos .as_p--> 
+ 
+   <input type="submit" class="btn">
+ 
+  </form>
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "Milibreria/base.html" %} 
+
+{% load static %}
+
+{% block titulo %} lista Producto {% endblock %}
+
+{% block extra_css %} 
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/listaProducto.css' %}">
+
+{% endblock %}
+
+
+{% block main %}
+
+
+
+<section class="lista">
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+    <div class="titulo">
+        <h2> Lista de Libros</h2>
+    </div>
+    <div class="bg-image h-100">
+<div class="mask d-flex align-items-center h-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow-2-strong">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                             {% csrf_token %}
+                            <table class="table">
+                                
+                               <thead>
+                                     <tr>
+                                            <th scope="col">Seleccion</th>
+                                            <th scope="col">Libro</th>
+                                            <th scope="col">Stock</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Accion</th>
+                                    </tr>
+                                </thead> 
+                                {% for producto in productos %}
+                                    <tbody>
+                                        
+                                    <tr>
+                                    <th scope="row"> 
+                                        <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" checked/></div></th>
+                                    
+                                    
+                                       <td> <img src="{{ producto.libro }}" width=100 height=120></td>
+                                       <td> {{ producto.stock }} </td>
+                                        <td> {{ producto.tipo }} </td>
+                                        <td> {{ producto.precio }} </td>
+                                        <td>  <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-warding">Eliminar</a> 
+                                              <a href="{% url 'editar_producto' producto.id %}" class="btn btn-warding">Editar</a> 
+                                        </td>
+                                
+                                    {% empty %}
+                                    <th>
+                                        <p>No hay producto</p>
+                                    </th>
+
+                                    
+                                {% endfor %}
+
+                                    </tbody>
+                                <tbody>
+                                    
+                                    <th scope="row"> </th>
+                                        <div class="gap-3 d-md-flex position-absolute fixed-bottom justify-content-md-center mb-3">
+                                        <a href="{%  url 'altaCliente' %}" class="btn btn-warding">Registrate</a>
+                                        <a href="{%  url 'altaProducto' %}" class="btn btn-warding">Ingresar libro</a>
+                                       
+                                          
+                                           
+                                        </div>
+                                </tbody>
+                             
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ </div>
+</section>
+{% endblock %}

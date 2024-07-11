@@ -1,0 +1,34 @@
+{% extends "Milibreria/base.html" %} 
+
+{% load static %}
+
+
+
+{% block titulo %} Edicion de Producto {% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/altaProducto.css' %}">
+
+{% endblock %}
+
+
+{% block main %}
+
+<section id="formulario">
+
+<h2>Editar Libro</h2>
+ <form method="POST" class="form-row">
+
+ {% csrf_token %}
+
+ {{ form.as_p }}
+
+ <button type="submit" class="btn">Guardar</button>
+
+ </form>
+
+</section>
+
+ {% endblock %}
+

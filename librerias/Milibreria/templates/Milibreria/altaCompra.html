@@ -1,0 +1,74 @@
+{% extends "Milibreria/base.html" %} 
+
+{% load static %}
+
+
+
+{% block titulo %} compra{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/altaCompra.css' %}">
+
+{% endblock %}
+
+{% block main %}
+
+<section>
+  <div class="titulo">
+      <h2>Hace tu pedido!</h2>
+  </div>
+</section>
+
+<section id="compra">
+
+  <div class="container">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+          <div class="container">
+              <div class="row justify-content-center">
+                  <div class="col-12">
+                      <div class="card shadow-2-strong">
+                          <div class="card-body">
+                              <div class="table-responsive">
+                                <table class="table table-borderless mb-0">
+                                  <thead>
+                                   <tr>
+                                       <th scope="col">
+                                           <div class="form-check">
+                                               <input class="form-check-input" type="chackbox" value="" id="flexCheckDefault"/>
+                                           </div>
+                                       </th>
+                                       <th scope="col"> Libros </th>
+                                       <th scope="col"> Tipo </th>
+                                       <th scope="col"> Precio </th>
+                                       <th scope="col"> total </th>
+                                   </tr>
+                               </thead>
+         <tbody>
+              <tr>
+                  <th scope="row">
+                    <td><a href="{%  url 'listaProducto' %}" class="btn btn-warding">Volver a lista</a> </td>  
+                  
+                  <td> </td>
+              
+                  <td>
+                    <a onclick="alert('COMPRA EXITOSA!!! Verifica tu Email');" class="btn btn-pwarding">Comprar</a>
+                    
+                  </td>
+                 
+                </th>
+              </tr>
+          </tbody>
+
+          </table>
+        </div>   
+        </div>
+      </div>    
+    </div>   
+  </div>
+</div> 
+</div>   
+</div>
+  </section>
+    {% endblock %}
