@@ -1,0 +1,124 @@
+{% extends "Milibreria/base.html" %}
+
+{% load static %}
+
+{% block titulo %} Bienvenido {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Milibreria/styles/inicio_autenticado.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="carritoModalLabel">Tu Carrito de Compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí se mostrarán los detalles de las compras -->
+        <ul id="carritoItems">
+          {% for detalle in detalles_orden %}
+          <li>{{ detalle.libro.titulo }} - Cantidad: {{ detalle.cantidad }} - Precio: ${{ detalle.precio }} - Total: ${{
+            detalle.total }}</li>
+          {% endfor %}
+        </ul>
+        <p id="totalGeneral">Total: $0.00</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{% url 'confirmar_compra' %}">
+          {% csrf_token %}
+          <input type="hidden" name="carrito" id="carritoInput">
+          <button type="button" class="btn" id="borrarCarrito">Borrar</button>
+          <button type="button" class="btn">Confirmar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="mensajeNotificacion" class="alert alert-success" role="alert"
+  style="display:none; position: fixed; bottom: 20px; right: 20px; color: #D2649A; background-color: rgb(239, 230, 230);">
+  Libro agregado al carrito
+</div>
+<section id="inicio">
+  <div class="container-saludo">
+    <h1>Bienvenido, {{ user.nombre }}!</h1>
+    <p>¡Estamos encantados de verte de nuevo en Librería Django!</p>
+    <p>Aquí encontrarás las últimas novedades y recomendaciones solo para ti.</p>
+  </div>
+</section>
+
+<section class="container-cards">
+  {% for libro in libros %}
+  <div class="container-libros">
+    <div class="card-libro">
+      <img src="{{libro.imagen}}" alt="{{libro.titulo}}" class="card-img">
+      <div class="card-descripcion-libro">
+        <h5 class="card-title">{{libro.titulo}}</h5>
+        <h6 class="card-text">{{libro.autor}}</h6>
+        <p class="card-text">{{libro.descripcion}}</p>
+        <p class="card-text" style="font-weight: bold;">Precio: $ {{libro.precio}}</p>
+        <a href="#" class="button" data-id="{{libro.id}}" data-titulo="{{libro.titulo}}" data-precio="{{libro.precio}}">Comprar</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carritoItems = document.getElementById('carritoItems');
+    const botonesComprar = document.querySelectorAll('.button');
+    const totalGeneralElement = document.getElementById('totalGeneral');
+    const botonBorrar = document.getElementById('borrarCarrito');
+    const mensajeNotificacion = document.getElementById('mensajeNotificacion');
+    const carritoInput = document.getElementById('carritoInput');
+    let totalGeneral = 0;
+    let carrito = [];
+
+    function mostrarMensaje(mensaje) {
+      mensajeNotificacion.textContent = mensaje;
+      mensajeNotificacion.style.display = 'block';
+      setTimeout(() => {
+        mensajeNotificacion.style.display = 'none';
+      }, 3000);
+    }
+
+    botonesComprar.forEach(boton => {
+      boton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const libroId = this.dataset.id;
+        const libroTitulo = this.dataset.titulo;
+        const libroPrecio = parseFloat(this.dataset.precio);
+
+        if (!libroTitulo || isNaN(libroPrecio)) {
+          console.log('Error al obtener los datos del libro', libroTitulo, libroPrecio);
+          return;
+        }
+
+        const listItem = document.createElement('li');
+        listItem.textContent = `${libroTitulo} - Precio: $${libroPrecio}`;
+
+        carritoItems.appendChild(listItem);
+
+        totalGeneral += libroPrecio;
+        totalGeneralElement.textContent = `Total: $${totalGeneral.toFixed(2)}`;
+
+        carrito.push({ titulo: libroTitulo, cantidad: 1,  precio: libroPrecio });
+        carritoInput.value = JSON.stringify(carrito);
+
+        mostrarMensaje('Libro agregado al carrito');
+      });
+    });
+
+    botonBorrar.addEventListener('click', function () {
+      carritoItems.innerHTML = '';
+      totalGeneral = 0;
+      totalGeneralElement.textContent = `Total: $${totalGeneral.toFixed(2)}`;
+      carrito = [];
+      carritoInput.value = '';
+    });
+  });
+</script>
+{% endblock %}

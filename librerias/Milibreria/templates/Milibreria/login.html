@@ -1,0 +1,33 @@
+{% extends "Milibreria/base.html" %}
+
+{% load static %}
+
+{% block titulo %} Iniciar Sesión {% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/loginusuario.css' %}">
+
+{% endblock %}
+
+
+{% block main %}
+
+<section id="formulario">
+
+  <form class="col-md-12" method="POST" action="{% url 'loginusuario' %}">
+
+    {% csrf_token %} <!-- si no esta no funciona el post -->
+
+    <div class="form-row">
+
+
+      {{ form.as_div }} <!--agregamos .as_p-->
+
+      <input class="button" type="submit" value="Iniciar Sesión">
+    </div>
+  </form>
+</section>
+
+
+{% endblock %}

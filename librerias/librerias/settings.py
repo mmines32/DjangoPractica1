@@ -85,8 +85,20 @@ DATABASES = {
         "PASSWORD": "Quieropost",
         "HOST": "127.0.0.1",
         "PORT": "5432",
+    },
+    
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "libreria_django",
+        "USER": "postgres",
+        "PASSWORD": "Jaimillo81.",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
+    
 }
+
+AUTH_USER_MODEL = "Milibreria.Usuario"
 
 
 # Password validation

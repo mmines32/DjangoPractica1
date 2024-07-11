@@ -1,0 +1,32 @@
+{% extends "Milibreria/base.html" %}
+
+{% load static %}
+
+{% block titulo %} Registro {% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'Milibreria/styles/registro.css' %}">
+
+{% endblock %}
+
+
+{% block main %}
+
+<section id="formulario">
+
+  <form class="col-md-12" method="POST" action="{% url 'registro' %}">
+
+    {% csrf_token %} <!-- si no esta no funciona el post -->
+
+    <div class="form-row">
+
+      {{ form.as_div }} <!--agregamos .as_p-->
+
+      <input class="button" type="submit" value="Registrarse">
+    </div>
+  </form>
+</section>
+
+
+{% endblock %}
